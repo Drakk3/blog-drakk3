@@ -1,18 +1,18 @@
 {
   "name": "ev0-astro-theme",
   "version": "1.1.8",
-  "description": "EV0 is a free and open-source serverless blog template, built with Astro, Tailwind CSS, and TypeScript.",
+  "description": "Soy donde debo de ser.",
   "license": "MIT",
   "private": true,
   "author": {
-    "name": "GNDX"
+    "name": "Drakk3"
   },
   "homepage": "https://ev0.gndx.dev",
   "contributors": [
     {
-      "name": "Oscar Barajas @gndx",
-      "email": "oscar@gndx.dev",
-      "url": "https://gndx.dev"
+      "name": "Juan D Valencia @dreykdev",
+      "email": "/",
+      "url": "/"
     }
   ],
   "keywords": [
@@ -38,15 +38,15 @@
     "lint:eslint": "eslint . --ext .js,.ts,.astro"
   },
   "devDependencies": {
-    "@astrojs/mdx": "2.2.3",
+    "@astrojs/mdx": "^4.3.0",
     "@astrojs/rss": "4.0.5",
     "@astrojs/sitemap": "3.1.2",
-    "@astrojs/tailwind": "5.1.0",
+    "@astrojs/tailwind": "^5.1.5",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.12",
     "@typescript-eslint/eslint-plugin": "7.5.0",
     "@typescript-eslint/parser": "7.5.0",
-    "astro": "^4.16.8",
+    "astro": "^5.11.0",
     "astro-md-generator": "1.0.0",
     "astro-robots-txt": "1.0.0",
     "dotenv": "16.4.5",
@@ -58,7 +58,7 @@
     "prettier-plugin-astro": "0.13.0",
     "prettier-plugin-tailwindcss": "0.5.13",
     "tailwindcss": "3.4.3",
-    "vite-plugin-pwa": "0.19.7"
+    "vite-plugin-pwa": "^1.0.1"
   },
   "resolutions": {
     "astro/sharp": "0.33.1",

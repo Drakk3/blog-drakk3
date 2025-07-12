@@ -1,15 +1,15 @@
 /* TEAM */
-	Chef: Oscar Barajas Tavares
-	Contact: oscar [at] gndx.dev
-	Twitter: @gndx
-	From: Medellín, Antioquia, Colombia.
+	Chef: Juan D Valencia
+	Contact: Drakk3
+	Twitter: @dreykdev
+	From: this world.
 
 /* THANKS */
 	Template: EV0 Theme
-	GitHub: @gndx
+	GitHub: @Drakk3
 
 /* SITE */
-	Last update: 2023/09/18
+	Last update: 2025/07/12
 	Language: Spanish
 	Doctype: Astro
 	IDE: VSCode
