@@ -3,9 +3,9 @@ title: 'Outlander'
 description: 'Inicios'
 pubDate: 'May 08 2022'
 heroImage: '/imgs/blogs/decisiones.png'
-categories: ['life']
+categories: ['memories']
 authors: ['drakk3']
-tags: ['memories']
+tags: ['memories','life']
 ---
 Me urge encontrarte.
 
