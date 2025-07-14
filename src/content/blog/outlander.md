@@ -5,7 +5,7 @@ pubDate: 'May 08 2022'
 heroImage: '/imgs/blogs/decisiones.png'
 categories: ['life']
 authors: ['drakk3']
-tags: ['life']
+tags: ['memories']
 ---
 Me urge encontrarte.
 Perdido en un desierto de identidades ocultas tras largas pestañas y gafas de sol, tras posadas de lujosas luces.
