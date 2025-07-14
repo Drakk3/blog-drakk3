@@ -8,6 +8,7 @@ authors: ['drakk3']
 tags: ['memories']
 ---
 Me urge encontrarte.
+
 Perdido en un desierto de identidades ocultas tras largas pestañas y gafas de sol, tras posadas de lujosas luces.
 La tarde me enloquece y la noche cautivamente me salva; me lleva a mentir.
 
