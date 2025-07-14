@@ -2,7 +2,7 @@
 title: 'Outlander'
 description: 'Inicios'
 pubDate: 'May 08 2022'
-heroImage: '/imgs/blogs/decisiones.png'
+heroImage: '/imgs/blogs/outlander.png'
 categories: ['memories']
 authors: ['drakk3']
 tags: ['memories','life']
