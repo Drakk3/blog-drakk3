@@ -1,5 +1,5 @@
 ---
-title: 'Night  Owl
+title: 'Night  Owl'
 description: 'Nostalgia'
 pubDate: 'Jun 09 2022'
 heroImage: '/imgs/blogs/outlander.png'
