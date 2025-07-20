@@ -2,7 +2,7 @@
 title: 'Doncella'
 description: 'Inicios'
 pubDate: 'August 21 2023'
-heroImage: '/imgs/blogs/outlander.png'
+heroImage: '/imgs/blogs/IMG-20250720-WA0007.jpg.png'
 categories: ['memories']
 authors: ['drakk3']
 tags: ['memories','life']
