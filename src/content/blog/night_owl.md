@@ -9,6 +9,7 @@ tags: ['memories','life']
 ---
 
 Night owl
+
 Lucho con mi luz.
 
 En mi paraíso mental surgen creaciones asombrosas que efímeramente aplico a la realidad, en la noche un personaje inteligentemente egocentrista; en el día un ser deficiente en busca de un séquito.
