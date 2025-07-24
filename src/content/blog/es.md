@@ -1,11 +1,11 @@
 ---
-title: 'Decisiones'
-description: 'nada mas'
-pubDate: 'Jul 12 2025'
+title: 'es'
+description: 'Intentos de hacer una bitacora y no escribirle a la nostalgia'
+pubDate: 'Jul 24 2025'
 heroImage: '/imgs/blogs/decisiones.png'
-categories: ['life']
+categories: ['grow']
 authors: ['drakk3']
-tags: ['life']
+tags: ['life','grow']
 ---
 
 Llevo tiempo analizando la forma en la que escribo. Me refiero a esos momentos en los que, inspirado, razono emociones y sentimientos que plasmo en letras. Y me pregunto: ¿por qué solo me inspiro con la nostalgia? ¿Por qué tan raramente surge algo fuera de ella?
