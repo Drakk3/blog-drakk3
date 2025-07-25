@@ -2,7 +2,7 @@
 title: 'es'
 description: 'Intentos de hacer una bitacora y no escribirle a la nostalgia'
 pubDate: 'Jul 24 2025'
-heroImage: '/imgs/blogs/decisiones.png'
+heroImage: '/imgs/blogs/es.jpg'
 categories: ['grow']
 authors: ['drakk3']
 tags: ['life','grow']
