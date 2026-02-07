@@ -2,7 +2,7 @@
 title: 'Doncella'
 description: 'Inicios'
 pubDate: 'August 21 2023'
-heroImage: '/imgs/blogs/doncella.jpg'
+heroImage: ''
 categories: ['memories']
 authors: ['drakk3']
 tags: ['memories','life']
