@@ -1,3 +1,12 @@
+---
+title: 'Solo se tu'
+description: 'Deseo desearte'
+pubDate: 'Feb 07 2026'
+heroImage: '/imgs/blogs/mercedes.png'
+categories: ['Yo']
+authors: ['drakk3']
+tags: ['cicle','life','grow']
+---
 Me encanta la rareza.
 Ese gesto primitivo de exposición,
 ese grito sin testigos donde el libre albedrío se encoge de hombros
