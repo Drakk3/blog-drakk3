@@ -9,7 +9,7 @@ audio: '/audio/objetiveInLife.mp3'
 audioTitle: "messa da requiem for soloists, chorus and orchestra: i. requiem & kyrie"
 audioStartTime: 50
 
-categories: ['grow']
+categories: ['yo']
 tags: ['life','grow']
 authors: ['drakk3']
 ---
