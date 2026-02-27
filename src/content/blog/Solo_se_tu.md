@@ -2,8 +2,8 @@
 title: 'Solo se tu'
 description: 'Deseo desearte'
 pubDate: 'Feb 07 2026'
-heroImage: '/imgs/blogs/outlander.png'
-categories: ['Yo']
+heroImage: ''
+categories: ['Love']
 authors: ['drakk3']
 tags: ['cicle','life','grow']
 ---
