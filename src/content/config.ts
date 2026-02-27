@@ -10,7 +10,7 @@ const blog = defineCollection({
     audio: z.string().optional(), // ruta al MP3, ej: '/audio/mi-post.mp3'
     categories: z.array(z.string()).default(['others']),
     tags: z.array(z.string()).default(['others']),
-    authors: z.array(z.string()).default(['gndx']),
+    authors: z.array(z.string()).default(['drakk3']),
   }),
 });
 
