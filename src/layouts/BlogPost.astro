@@ -11,7 +11,7 @@ import { slugify } from '@utils/slug';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, heroImage, audio, categories, tags } = Astro.props;
+const { title, description, pubDate, heroImage, audio, audioTitle, audioStartTime, categories, tags } = Astro.props;
 ---
 
 <Base meta_title={title} description={description} image={heroImage} blogpost>
@@ -67,7 +67,10 @@ const { title, description, pubDate, heroImage, audio, categories, tags } = Astr
       </div>
     </div>
     {audio && (
-      <AudioPlayer src={audio} title={title} />
+      <AudioPlayer
+        src={audio}
+        title={audioTitle ?? title}
+        startTime={audioStartTime ?? 0}/>
     )}
     <div class="prose-md prose prose-green min-w-full md:prose-lg">
       <slot />

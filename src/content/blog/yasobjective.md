@@ -4,7 +4,11 @@ description: 'Enamorado uno es una cosa pero barbara'
 pubDate: 2026-02-15
 updatedDate: 2026-02-27
 heroImage: '/imgs/blogs/objetiveInLife.jpeg'
+
 audio: '/audio/objetiveInLife.mp3'
+audioTitle: "messa da requiem for soloists, chorus and orchestra: i. requiem & kyrie"
+audioStartTime: 50
+
 categories: ['grow']
 tags: ['life','grow']
 authors: ['drakk3']

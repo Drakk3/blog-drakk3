@@ -7,7 +7,11 @@ const blog = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
-    audio: z.string().optional(), // ruta al MP3, ej: '/audio/mi-post.mp3'
+
+    audio: z.string().optional(),
+    audioTitle: z.string().optional(),
+    audioStartTime: z.coerce.number().optional(),
+
     categories: z.array(z.string()).default(['others']),
     tags: z.array(z.string()).default(['others']),
     authors: z.array(z.string()).default(['drakk3']),

@@ -2,20 +2,172 @@
 interface Props {
   src: string;
   title?: string;
+  startTime?: number; // segundos
 }
-const { src, title = 'Audio' } = Astro.props;
+
+const { src, title = 'Ambient audio', startTime } = Astro.props;
 ---
 
-<div class="my-6 rounded-xl bg-zinc-100 p-4 dark:bg-zinc-800/80">
-  <audio
-    class="w-full"
-    controls
-    preload="metadata"
-    aria-label={title}
-  >
-    <source src={src} type="audio/mpeg" />
-    <p class="text-sm text-zinc-600 dark:text-zinc-400">
-      Tu navegador no soporta audio. <a href={src}>Descargar</a>
-    </p>
-  </audio>
-</div>
+{src && (
+  <div class="ambient-wrapper" data-ambient-wrapper aria-label={`Reproductor de audio: ${title}`}>
+    <button
+      class="ambient-btn"
+      type="button"
+      aria-label={title}
+      title={title}
+      data-ambient-toggle
+    >
+      <span data-ambient-icon aria-hidden="true">▶</span>
+    </button>
+
+    <div class="ambient-info">
+      <span class="ambient-label" data-ambient-status>Paused</span>
+      <span class="ambient-title">{title}</span>
+    </div>
+
+    <audio
+      data-ambient-audio
+      src={src}
+      preload="metadata"
+      loop
+    ></audio>
+  </div>
+)}
+
+<style>
+  .ambient-wrapper {
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 9999px;
+    background: rgba(24, 24, 27, 0.85);
+    color: #e5e5e5;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+
+  @media (prefers-color-scheme: light) {
+    .ambient-wrapper {
+      background: rgba(244, 244, 245, 0.9);
+      color: #18181b;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+    }
+  }
+
+  .ambient-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9999px;
+    border: 1px solid rgba(82, 82, 91, 0.6);
+    background: radial-gradient(circle at 30% 30%, #f4f4f5, #27272a);
+    color: #f9fafb;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .ambient-btn:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.4);
+    border-color: rgba(113, 113, 122, 0.9);
+  }
+
+  .ambient-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.5);
+  }
+
+  .ambient-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .ambient-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(161, 161, 170, 0.95);
+  }
+
+  .ambient-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: inherit;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+</style>
+
+<script is:inline define:vars={{ startTime }}>
+  const wrapper = document.querySelector('[data-ambient-wrapper]');
+  if (!wrapper) return;
+
+  const audio = wrapper.querySelector('[data-ambient-audio]');
+  const button = wrapper.querySelector('[data-ambient-toggle]');
+  const icon = wrapper.querySelector('[data-ambient-icon]');
+  const status = wrapper.querySelector('[data-ambient-status]');
+
+  if (!audio || !button || !icon || !status) return;
+
+  audio.volume = 0.6;
+
+  const START_TIME = Number(startTime ?? 0);
+  let startApplied = false;
+
+  const applyStartTimeOnce = () => {
+    if (startApplied) return;
+    if (!Number.isFinite(START_TIME) || START_TIME <= 0) return;
+    try {
+      audio.currentTime = START_TIME;
+      startApplied = true;
+    } catch (err) {
+      console.warn('No se pudo fijar el tiempo inicial del audio:', err);
+    }
+  };
+
+  if (START_TIME > 0) {
+    if (audio.readyState >= 1) applyStartTimeOnce();
+    else audio.addEventListener('loadedmetadata', applyStartTimeOnce, { once: true });
+  }
+
+  const updateUI = () => {
+    const playing = !audio.paused;
+    icon.textContent = playing ? '⏸' : '▶';
+    status.textContent = playing ? 'Sonando' : 'Pausado';
+    button.style.opacity = playing ? '1' : '0.85';
+  };
+
+  updateUI();
+
+  button.addEventListener('click', async () => {
+    try {
+      if (audio.paused) {
+        await audio.play();
+      } else {
+        audio.pause();
+      }
+      updateUI();
+    } catch (err) {
+      console.warn('Audio blocked:', err);
+    }
+  });
+
+  audio.addEventListener('play', updateUI);
+  audio.addEventListener('pause', updateUI);
+</script>
