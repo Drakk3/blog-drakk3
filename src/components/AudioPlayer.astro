@@ -1,0 +1,21 @@
+---
+interface Props {
+  src: string;
+  title?: string;
+}
+const { src, title = 'Audio' } = Astro.props;
+---
+
+<div class="my-6 rounded-xl bg-zinc-100 p-4 dark:bg-zinc-800/80">
+  <audio
+    class="w-full"
+    controls
+    preload="metadata"
+    aria-label={title}
+  >
+    <source src={src} type="audio/mpeg" />
+    <p class="text-sm text-zinc-600 dark:text-zinc-400">
+      Tu navegador no soporta audio. <a href={src}>Descargar</a>
+    </p>
+  </audio>
+</div>

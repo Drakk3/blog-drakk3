@@ -4,13 +4,14 @@ import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '@components/FormattedDate.astro';
 import CalendarIcon from '@icons/CalendarIcon.astro';
 import CategoryIcon from '@icons/CategoryIcon.astro';
+import AudioPlayer from '@components/AudioPlayer.astro';
 import { Image } from 'astro:assets';
 import config from '@config/config.json';
 import { slugify } from '@utils/slug';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, heroImage, categories, tags } = Astro.props;
+const { title, description, pubDate, heroImage, audio, categories, tags } = Astro.props;
 ---
 
 <Base meta_title={title} description={description} image={heroImage} blogpost>
@@ -65,6 +66,9 @@ const { title, description, pubDate, heroImage, categories, tags } = Astro.props
         </div>
       </div>
     </div>
+    {audio && (
+      <AudioPlayer src={audio} title={title} />
+    )}
     <div class="prose-md prose prose-green min-w-full md:prose-lg">
       <slot />
     </div>
