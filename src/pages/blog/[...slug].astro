@@ -4,19 +4,37 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import BlogPost from "@layouts/BlogPost.astro";
 import Code from "@components/mdx/Code.astro";
 
+type BlogEntry = CollectionEntry<"blog">;
+type Props = BlogEntry & {
+  prev?: BlogEntry | null;
+  next?: BlogEntry | null;
+};
+
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
-  }));
-}
-type Props = CollectionEntry<"blog">;
+  const sorted = [...posts].sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
 
-const post = Astro.props;
+  return sorted.map((post, index) => {
+    const prev = index < sorted.length - 1 ? sorted[index + 1] : null;
+    const next = index > 0 ? sorted[index - 1] : null;
+
+    return {
+      params: { slug: post.slug },
+      props: {
+        ...post,
+        prev,
+        next,
+      },
+    };
+  });
+}
+
+const { prev, next, ...post } = Astro.props as Props;
 const { Content } = await post.render();
 ---
 
-<BlogPost {...post.data}>
+<BlogPost {...post.data} prev={prev} next={next}>
   <Content components={{ pre: Code }} />
 </BlogPost>

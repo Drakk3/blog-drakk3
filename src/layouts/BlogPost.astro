@@ -9,9 +9,25 @@ import { Image } from 'astro:assets';
 import config from '@config/config.json';
 import { slugify } from '@utils/slug';
 
-type Props = CollectionEntry<'blog'>['data'];
+type BlogEntry = CollectionEntry<'blog'>;
+type Props = BlogEntry['data'] & {
+  prev?: BlogEntry | null;
+  next?: BlogEntry | null;
+};
 
-const { title, description, pubDate, heroImage, audio, audioTitle, audioStartTime, categories, tags } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  heroImage,
+  audio,
+  audioTitle,
+  audioStartTime,
+  categories,
+  tags,
+  prev,
+  next,
+} = Astro.props as Props;
 ---
 
 <Base meta_title={title} description={description} image={heroImage} blogpost>
@@ -70,7 +86,8 @@ const { title, description, pubDate, heroImage, audio, audioTitle, audioStartTim
       <AudioPlayer
         src={audio}
         title={audioTitle ?? title}
-        startTime={audioStartTime ?? 0}/>
+        startTime={audioStartTime ?? 0}
+      />
     )}
     <div class="prose-md prose prose-green min-w-full md:prose-lg">
       <slot />
@@ -87,5 +104,55 @@ const { title, description, pubDate, heroImage, audio, audioTitle, audioStartTim
         ))
       }
     </div>
+
+    {(prev || next) && (
+      <nav class="mt-12 border-t border-zinc-200 pt-8 text-sm text-zinc-700 dark:border-zinc-800 dark:text-zinc-300">
+        <div class="grid gap-4 md:grid-cols-2">
+          {prev && (
+            <a
+              href={`/blog/${prev.slug}`}
+              class="group flex items-start gap-3 rounded-xl border border-zinc-200/70 bg-zinc-50/80 p-4 text-left transition hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-600 dark:hover:bg-zinc-900"
+            >
+              <span class="mt-1 text-lg text-zinc-500 group-hover:text-zinc-700 dark:text-zinc-400 dark:group-hover:text-zinc-200">
+                ⬅
+              </span>
+              <div class="space-y-1 overflow-hidden">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
+                  Anterior
+                </p>
+                <p class="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+                  {prev.data.title}
+                </p>
+                <p class="line-clamp-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  {prev.data.description}
+                </p>
+              </div>
+            </a>
+          )}
+
+          {next && (
+            <a
+              href={`/blog/${next.slug}`}
+              class="group flex items-start justify-end gap-3 rounded-xl border border-zinc-200/70 bg-zinc-50/80 p-4 text-right transition hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-600 dark:hover:bg-zinc-900"
+            >
+              <div class="space-y-1 overflow-hidden">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
+                  Siguiente
+                </p>
+                <p class="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+                  {next.data.title}
+                </p>
+                <p class="line-clamp-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  {next.data.description}
+                </p>
+              </div>
+              <span class="mt-1 text-lg text-zinc-500 group-hover:text-zinc-700 dark:text-zinc-400 dark:group-hover:text-zinc-200">
+                ➡
+              </span>
+            </a>
+          )}
+        </div>
+      </nav>
+    )}
   </article>
 </Base>
