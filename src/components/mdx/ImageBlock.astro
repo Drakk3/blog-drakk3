@@ -1,30 +1,33 @@
 ---
-import { Image } from 'astro:assets';
-
 interface Props {
   src: string;
   alt: string;
   caption?: string;
+  float?: 'left' | 'right' | 'none';
   wide?: boolean;
-  width?: number;
-  height?: number;
 }
 
-const { src, alt, caption, wide = false, width = 960, height = 540 } = Astro.props;
+const { src, alt, caption, float = 'none', wide = false } = Astro.props;
 ---
 
-<figure class:list={['not-prose', wide ? '-mx-8 md:-mx-16' : '']}>
-  <Image
+<figure
+  class:list={[
+    'not-prose',
+    float === 'left'  && 'my-2 w-full md:float-left md:mr-8 md:mb-4 md:mt-1 md:w-[38%]',
+    float === 'right' && 'my-2 w-full md:float-right md:ml-8 md:mb-4 md:mt-1 md:w-[38%]',
+    float === 'none' && !wide && 'my-8 w-full',
+    float === 'none' && wide  && 'my-8 -mx-8 md:-mx-16 w-[calc(100%+4rem)] md:w-[calc(100%+8rem)]',
+  ]}
+>
+  <img
     src={src}
     alt={alt}
-    width={width}
-    height={height}
     class="w-full rounded-lg object-cover"
-    decoding="async"
     loading="lazy"
+    decoding="async"
   />
   {caption && (
-    <figcaption class="mt-2 text-center text-sm text-zinc-500 dark:text-zinc-400">
+    <figcaption class="mt-2 text-center text-sm text-zinc-500 dark:text-zinc-400 italic">
       {caption}
     </figcaption>
   )}
