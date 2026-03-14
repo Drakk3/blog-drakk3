@@ -5,7 +5,25 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        serif: ['Georgia', 'Cambria', '"Times New Roman"', 'serif'],
+      },
       typography: (theme) => ({
+        essay: {
+          css: {
+            fontFamily: 'Georgia, Cambria, serif',
+            fontSize: '1.125rem',
+            lineHeight: '1.8',
+            'p:first-of-type::first-letter': {
+              float: 'left',
+              fontSize: '3.5em',
+              lineHeight: '0.8',
+              marginRight: '0.1em',
+              marginTop: '0.1em',
+              fontWeight: '700',
+            },
+          },
+        },
         DEFAULT: {
           css: {
             a: {

@@ -2,7 +2,9 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 
 import BlogPost from "@layouts/BlogPost.astro";
+import EssayLayout from "@layouts/EssayLayout.astro";
 import Code from "@components/mdx/Code.astro";
+import { readingTime } from "@utils/readingTime";
 
 type BlogEntry = CollectionEntry<"blog">;
 type Props = BlogEntry & {
@@ -32,9 +34,17 @@ export async function getStaticPaths() {
 }
 
 const { prev, next, ...post } = Astro.props as Props;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
+const readingMinutes = readingTime(post.body);
+const postType = post.data.type ?? 'post';
 ---
 
-<BlogPost {...post.data} prev={prev} next={next}>
-  <Content components={{ pre: Code }} />
-</BlogPost>
+{postType === 'essay' ? (
+  <EssayLayout {...post.data} prev={prev} next={next} headings={headings} readingTime={readingMinutes}>
+    <Content components={{ pre: Code }} />
+  </EssayLayout>
+) : (
+  <BlogPost {...post.data} prev={prev} next={next}>
+    <Content components={{ pre: Code }} />
+  </BlogPost>
+)}

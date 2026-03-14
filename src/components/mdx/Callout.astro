@@ -1,0 +1,20 @@
+---
+interface Props {
+  type?: 'info' | 'warning' | 'tip';
+}
+const { type = 'info' } = Astro.props;
+
+const styles = {
+  info: 'border-blue-400 bg-blue-50 text-blue-900 dark:border-blue-500 dark:bg-blue-950/40 dark:text-blue-100',
+  warning: 'border-yellow-400 bg-yellow-50 text-yellow-900 dark:border-yellow-500 dark:bg-yellow-950/40 dark:text-yellow-100',
+  tip: 'border-green-400 bg-green-50 text-green-900 dark:border-green-500 dark:bg-green-950/40 dark:text-green-100',
+};
+
+const icons = { info: 'ℹ', warning: '⚠', tip: '💡' };
+---
+<div class:list={['not-prose my-6 flex gap-3 rounded-lg border-l-4 px-4 py-3', styles[type]]}>
+  <span class="mt-0.5 shrink-0 text-base leading-none">{icons[type]}</span>
+  <div class="text-sm leading-relaxed">
+    <slot />
+  </div>
+</div>

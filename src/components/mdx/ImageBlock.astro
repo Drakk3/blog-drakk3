@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  wide?: boolean;
+  width?: number;
+  height?: number;
+}
+
+const { src, alt, caption, wide = false, width = 960, height = 540 } = Astro.props;
+---
+
+<figure class:list={['not-prose', wide ? '-mx-8 md:-mx-16' : '']}>
+  <Image
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    class="w-full rounded-lg object-cover"
+    decoding="async"
+    loading="lazy"
+  />
+  {caption && (
+    <figcaption class="mt-2 text-center text-sm text-zinc-500 dark:text-zinc-400">
+      {caption}
+    </figcaption>
+  )}
+</figure>

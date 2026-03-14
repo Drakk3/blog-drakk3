@@ -1,0 +1,153 @@
+---
+import Base from '@layouts/Base.astro';
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from '@components/FormattedDate.astro';
+import CalendarIcon from '@icons/CalendarIcon.astro';
+import CategoryIcon from '@icons/CategoryIcon.astro';
+import TableOfContents from '@components/TableOfContents.astro';
+import ShareButtons from '@components/ShareButtons.astro';
+import { slugify } from '@utils/slug';
+
+type BlogEntry = CollectionEntry<'blog'>;
+type Props = BlogEntry['data'] & {
+  prev?: BlogEntry | null;
+  next?: BlogEntry | null;
+  headings: { depth: number; slug: string; text: string }[];
+  readingTime: number;
+};
+
+const {
+  title,
+  description,
+  pubDate,
+  heroImage,
+  categories,
+  tags,
+  prev,
+  next,
+  headings,
+  readingTime,
+} = Astro.props as Props;
+---
+
+<Base meta_title={title} description={description} image={heroImage} blogpost>
+  <!-- Reading progress bar -->
+  <div
+    id="reading-progress"
+    class="fixed top-0 left-0 h-1 bg-zinc-800 dark:bg-zinc-100 z-50 w-0 transition-none"
+  />
+
+  <article>
+    <!-- Essay header -->
+    <header class="mb-12 text-center">
+      <h1 class="font-serif text-4xl font-bold leading-tight md:text-5xl">{title}</h1>
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm text-zinc-600 dark:text-zinc-400">
+        <span class="flex items-center gap-1">
+          <CalendarIcon />
+          <FormattedDate date={pubDate} />
+        </span>
+        <span class="text-zinc-300 dark:text-zinc-600">·</span>
+        <span>{readingTime} min de lectura</span>
+        {categories?.length > 0 && (
+          <>
+            <span class="text-zinc-300 dark:text-zinc-600">·</span>
+            <span class="flex items-center gap-1">
+              <CategoryIcon />
+              <a
+                href={`/categories/${slugify(categories[0])}`}
+                class="hover:text-zinc-900 dark:hover:text-zinc-100 capitalize font-medium"
+              >
+                {categories[0]}
+              </a>
+            </span>
+          </>
+        )}
+      </div>
+    </header>
+
+    <!-- Two-column grid: TOC sidebar + content -->
+    <div class="lg:grid lg:grid-cols-[220px_1fr] lg:gap-12">
+      <!-- Desktop sidebar TOC -->
+      <aside class="hidden lg:block">
+        <div class="sticky top-24">
+          <TableOfContents headings={headings} />
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <div class="prose prose-essay prose-green min-w-full md:prose-lg">
+        <!-- Mobile TOC -->
+        <div class="lg:hidden">
+          <TableOfContents headings={headings} />
+        </div>
+        <slot />
+      </div>
+    </div>
+
+    <!-- Tags -->
+    {tags?.length > 0 && (
+      <div class="mt-12">
+        {tags.map((tag) => (
+          <a
+            href={`/tags/${slugify(tag)}`}
+            class="mb-2 mr-2 inline-block rounded-full bg-zinc-200 px-3 py-1 text-sm font-semibold capitalize text-zinc-700 dark:bg-zinc-900 dark:text-zinc-400"
+          >
+            #{tag}
+          </a>
+        ))}
+      </div>
+    )}
+
+    <!-- Share buttons -->
+    <ShareButtons title={title} url={Astro.url.href} />
+
+    <!-- Prev / Next navigation -->
+    {(prev || next) && (
+      <nav class="mt-12 border-t border-zinc-200 pt-8 text-sm text-zinc-700 dark:border-zinc-800 dark:text-zinc-300">
+        <div class="grid gap-4 md:grid-cols-2">
+          {prev && (
+            <a
+              href={`/blog/${prev.slug}`}
+              class="group flex items-start gap-3 rounded-xl border border-zinc-200/70 bg-zinc-50/80 p-4 text-left transition hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-600 dark:hover:bg-zinc-900"
+            >
+              <span class="mt-1 text-lg text-zinc-500 group-hover:text-zinc-700 dark:text-zinc-400 dark:group-hover:text-zinc-200">⬅</span>
+              <div class="space-y-1 overflow-hidden">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">Anterior</p>
+                <p class="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">{prev.data.title}</p>
+                <p class="line-clamp-2 text-xs text-zinc-600 dark:text-zinc-400">{prev.data.description}</p>
+              </div>
+            </a>
+          )}
+          {next && (
+            <a
+              href={`/blog/${next.slug}`}
+              class="group flex items-start justify-end gap-3 rounded-xl border border-zinc-200/70 bg-zinc-50/80 p-4 text-right transition hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-600 dark:hover:bg-zinc-900"
+            >
+              <div class="space-y-1 overflow-hidden">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">Siguiente</p>
+                <p class="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">{next.data.title}</p>
+                <p class="line-clamp-2 text-xs text-zinc-600 dark:text-zinc-400">{next.data.description}</p>
+              </div>
+              <span class="mt-1 text-lg text-zinc-500 group-hover:text-zinc-700 dark:text-zinc-400 dark:group-hover:text-zinc-200">➡</span>
+            </a>
+          )}
+        </div>
+      </nav>
+    )}
+  </article>
+</Base>
+
+<script>
+  function initProgress() {
+    const bar = document.getElementById('reading-progress');
+    if (!bar) return;
+    const update = () => {
+      const total = document.body.scrollHeight - window.innerHeight;
+      bar.style.width = total > 0 ? `${(window.scrollY / total) * 100}%` : '0%';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+  }
+
+  initProgress();
+  document.addEventListener('astro:page-load', initProgress);
+</script>

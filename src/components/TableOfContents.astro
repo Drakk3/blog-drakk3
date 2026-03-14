@@ -1,0 +1,82 @@
+---
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+const filtered = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{filtered.length > 0 && (
+  <nav class="toc text-sm">
+    {/* Desktop: always visible */}
+    <div class="hidden lg:block">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+        Contenido
+      </p>
+      <ul class="space-y-2">
+        {filtered.map((h) => (
+          <li class={h.depth === 3 ? 'pl-4' : ''}>
+            <a
+              href={`#${h.slug}`}
+              class="toc-link block text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+            >
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Mobile: collapsible */}
+    <details class="lg:hidden rounded-lg border border-zinc-200 dark:border-zinc-700 p-4 mb-6">
+      <summary class="cursor-pointer text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+        Contenido
+      </summary>
+      <ul class="mt-3 space-y-2">
+        {filtered.map((h) => (
+          <li class={h.depth === 3 ? 'pl-4' : ''}>
+            <a
+              href={`#${h.slug}`}
+              class="block text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+            >
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  </nav>
+)}
+
+<script>
+  function initTOC() {
+    const links = document.querySelectorAll<HTMLAnchorElement>('.toc-link');
+    if (!links.length) return;
+
+    const slugs = Array.from(links).map((l) => l.getAttribute('href')!.slice(1));
+    const headingEls = slugs
+      .map((s) => document.getElementById(s))
+      .filter(Boolean) as HTMLElement[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.id;
+          const link = document.querySelector<HTMLAnchorElement>(`.toc-link[href="#${id}"]`);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            document.querySelectorAll('.toc-link').forEach((l) => l.classList.remove('toc-active', 'text-zinc-900', 'dark:text-zinc-100', 'font-medium'));
+            link.classList.add('toc-active', 'text-zinc-900', 'dark:text-zinc-100', 'font-medium');
+          }
+        });
+      },
+      { rootMargin: '0px 0px -60% 0px' }
+    );
+
+    headingEls.forEach((el) => observer.observe(el));
+  }
+
+  initTOC();
+  document.addEventListener('astro:page-load', initTOC);
+</script>

@@ -15,6 +15,7 @@ const blog = defineCollection({
     categories: z.array(z.string()).default(['others']),
     tags: z.array(z.string()).default(['others']),
     authors: z.array(z.string()).default(['drakk3']),
+    type: z.enum(['post', 'essay', 'poem']).default('post'),
   }),
 });
 
