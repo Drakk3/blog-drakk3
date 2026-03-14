@@ -14,6 +14,9 @@ module.exports = {
             fontFamily: 'Georgia, Cambria, serif',
             fontSize: '1.125rem',
             lineHeight: '1.8',
+            li: {
+              'font-family': 'Georgia, Cambria, serif',
+            },
             'p:first-of-type::first-letter': {
               float: 'left',
               fontSize: '3.5em',

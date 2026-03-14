@@ -138,16 +138,18 @@ const {
 </Base>
 
 <script>
+  let _scrollHandler: (() => void) | null = null;
+
   function initProgress() {
     const bar = document.getElementById('reading-progress');
     if (!bar) return;
-    const update = () => {
+    if (_scrollHandler) window.removeEventListener('scroll', _scrollHandler);
+    _scrollHandler = () => {
       const total = document.body.scrollHeight - window.innerHeight;
       bar.style.width = total > 0 ? `${(window.scrollY / total) * 100}%` : '0%';
     };
-    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('scroll', _scrollHandler, { passive: true });
   }
 
-  initProgress();
   document.addEventListener('astro:page-load', initProgress);
 </script>
