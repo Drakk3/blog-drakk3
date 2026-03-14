@@ -10,7 +10,7 @@ import { manifest } from './src/utils/manifest';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'http://localhost:4322/',
+  site: 'https://drakk3-blog.netlify.app',
   image: {
     remotePatterns: [{ protocol: 'https' }],
   },

@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Drakk3",
-    "base_url": "https://ev0.gndx.io",
+    "base_url": "https://drakk3-blog.netlify.app",
     "base_path": "/",
     "favicon": "/imgs/tab-icon.svg",
     "logoLight": "/logoLight.png",
