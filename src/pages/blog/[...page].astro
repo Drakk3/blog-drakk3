@@ -6,7 +6,7 @@ import Pagination from "@components/Pagination.astro";
 import config from "@config/config.json";
 
 export async function getStaticPaths({ paginate }) {
-  const allPosts = await getCollection("blog");
+  const allPosts = (await getCollection("blog")).filter((p) => !p.data.draft);
   const formattedPosts = allPosts.sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
